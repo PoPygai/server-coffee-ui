@@ -1,12 +1,12 @@
-import {CoffeeInfo} from "../utils/types";
+import {Coffee} from "../model/Coffee";
 
 
 export interface ProductCoffee {
-    addCoffee: (coffee : CoffeeInfo) => Promise<void>;
+    addCoffee: (coffee : Coffee) => Promise<boolean>;
     changeCoffee: (id:number,value:string) => Promise<void>;
     removeCoffee: (id:number) => Promise<void>;
-    countCoffeeByName: (name:string) => Promise<string>;
-    getAllCoffees: () => Promise<CoffeeInfo[]>;
-    getCoffeeById: (id:number) => Promise<CoffeeInfo>;
+    quantityCoffeeByName: (name:string) => Promise<string>;
+    getAllCoffees: () => Promise<Coffee[]>;
+    getCoffeeById: (id:number) => Promise<Coffee>;
     //todo getOrder и тд
 }
