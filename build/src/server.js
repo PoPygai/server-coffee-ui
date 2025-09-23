@@ -9,6 +9,7 @@ const config_1 = require("./config/config");
 const router_1 = require("./routers/router");
 const node_fs_1 = require("node:fs");
 const morgan_1 = __importDefault(require("morgan"));
+const errorHandler_1 = require("./errorHandler/errorHandler");
 const launchServer = () => {
     //=============Server================================
     const logStream = (0, node_fs_1.createWriteStream)("./logs.log");
@@ -19,7 +20,10 @@ const launchServer = () => {
     //============================Middleware================
     app.use((0, morgan_1.default)('dev'));
     app.use((0, morgan_1.default)('combined', { stream: logStream }));
+    app.use(express_1.default.json());
     //=====================Router=======================
     app.use('/', router_1.router);
+    //====================errorHandling============
+    app.use(errorHandler_1.errorHandler);
 };
 exports.launchServer = launchServer;

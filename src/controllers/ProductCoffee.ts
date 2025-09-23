@@ -1,6 +1,5 @@
-import {ProductCoffee} from "../services/ProductCoffee";
 import {ProductCoffeeServicesImpl} from "../services/ProductCoffeeServicesImpl";
-import {convertCoffeDtoTOCoffee} from "../utils/tools";
+import {convertCoffeeDtoTOCoffee} from "../utils/tools";
 import {CoffeeDto} from "../model/CoffeeDto";
 import {Coffee} from "../model/Coffee";
 
@@ -10,16 +9,23 @@ export class controllerProductCoffee {
     private services = new ProductCoffeeServicesImpl();
 
     async addCoffee(product:CoffeeDto): Promise<Coffee> {
-        const coffee = convertCoffeDtoTOCoffee(product);
+        const coffee = convertCoffeeDtoTOCoffee(product);
         const res = await this.services.addCoffee(coffee);
         if(res){
             return coffee;
         }
-        throw new Error(JSON.stringify({status: 403, message: `Book with id ${coffee.id} not added`}))
+        throw new Error(JSON.stringify({status: 400, message: `Book with id ${coffee.id} not added`}))
     }
 
-    async changeCoffee(id:number,name:string): Promise<void> {
-        await this.services.changeCoffee(id,name);
+    async changeCoffee(id:string,coffee:CoffeeDto): Promise<any> {
+        const result = await this.services.changeCoffee(id,coffee);
+        if(result){
+            return {
+                id,
+                ...coffee
+            };
+        }
+        throw new Error(JSON.stringify({status:400 ,message:"Coffee not updated"}))
     }
 
     async quantityCoffeeByName(name:string): Promise<string> {
@@ -30,11 +36,11 @@ export class controllerProductCoffee {
         return await this.services.getAllCoffees();
     }
 
-    async getCoffeeById(id:number): Promise<CoffeeDto> {
-        return await this.services.getCoffeeById(id)
+    async getCoffeeByName(name:string): Promise<CoffeeDto> {
+        return await this.services.getCoffeeByName(name)
     }
 
-    async removeCoffee(id:number): Promise<void> {
+    async removeCoffee(id: string): Promise<void> {
         await this.services.removeCoffee(id);
     }
 

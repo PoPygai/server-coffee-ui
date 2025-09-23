@@ -13,14 +13,18 @@ export class ProductCoffeeServicesImpl implements ProductCoffee{
         return Promise.resolve(true);
     }
 
-    //todo
-    async changeCoffee(id: number, value: string): Promise<void> {
 
-        return Promise.resolve(undefined);
+    async changeCoffee(id: string, coffee:CoffeeDto): Promise<boolean> {
+        const result = await configuration.pool.query(
+            "UPDATE products_coffee SET name = ?, price = ?, quantity = ?, status = ? WHERE id = ?",
+            [coffee.name, coffee.price, coffee.quantity, coffee.status, id]
+        );
+
+        return Promise.resolve(!result ? false : true);
     }
 
     async quantityCoffeeByName(name: string): Promise<string> {
-        const [result] = await configuration.pool.query("SELECT quantity FROM products_coffee WHERE name= ?",[name]);
+        const [result] = await configuration.pool.query("SELECT name, quantity FROM products_coffee WHERE name= ?",[name]);
         return Promise.resolve("");
     }
 
@@ -29,15 +33,16 @@ export class ProductCoffeeServicesImpl implements ProductCoffee{
         return Promise.resolve(result as Coffee[]);
     }
 
-    async getCoffeeById(id: number): Promise<Coffee> {
-        const [result] = await configuration.pool.query("SELECT * FROM products_coffee WHERE id=?",[id])
+    async getCoffeeByName(name: string): Promise<Coffee> {
+        const [result] = await configuration.pool.query("SELECT * FROM products_coffee WHERE name=?",[name])
         return Promise.resolve(result as unknown as Coffee);
     }
 
     //todo
-    async removeCoffee(id: number): Promise<void> {
-        //DELETE FROM products_coffee WHERE id=?;
+    async removeCoffee(id: string): Promise<void> {
+        const result = configuration.pool.query("DELETE FROM products_coffee WHERE id=?",[id]);
         return Promise.resolve(undefined);
+
     }
 
 }

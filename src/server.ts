@@ -3,6 +3,7 @@ import {configuration} from "./config/config";
 import {router} from "./routers/router";
 import {createWriteStream} from "node:fs";
 import morgan from "morgan";
+import {errorHandler} from "./errorHandler/errorHandler";
 
 export const launchServer = ()=>{
 
@@ -20,5 +21,9 @@ export const launchServer = ()=>{
     app.use(express.json());
     //=====================Router=======================
     app.use('/',router);
+
+    //====================errorHandling============
+    app.use(errorHandler)
+
 
 }

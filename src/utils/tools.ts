@@ -3,19 +3,20 @@ import {Coffee, CoffeeStatus} from "../model/Coffee";
 import {CoffeeDto} from "../model/CoffeeDto";
 
 
-export const convertCoffeDtoTOCoffee = (coffee:CoffeeDto):Coffee=>{
+export const convertCoffeeDtoTOCoffee = (coffee:CoffeeDto):Coffee=>{
     return {
         id:uuidv4(),
         name:coffee.name,
         price:coffee.price,
-        quantity:coffee?.quantity,
-        status: CoffeeStatus.ON_STOCK
+        quantity:coffee.quantity,
+        status: coffee.status
     }
 }
-export const convertCoffeTOCoffeeDto = (coffee:Coffee):CoffeeDto=>{
+export const convertCoffeeTOCoffeeDto = (coffee:Coffee):CoffeeDto=>{
     return {
         name:coffee.name,
         price:coffee.price,
-        quantity:coffee?.quantity,
+        quantity:coffee.quantity,
+        status: coffee.status
     }
 }
