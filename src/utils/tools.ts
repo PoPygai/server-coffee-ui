@@ -1,7 +1,9 @@
 import {v4 as uuidv4} from 'uuid';
-import {Coffee, CoffeeStatus} from "../model/Coffee";
+import {Coffee} from "../model/Coffee";
 import {CoffeeDto} from "../model/CoffeeDto";
-
+import {UserDto} from "../model/UserDto";
+import bcrypt from "bcryptjs";
+import {Roles} from "./types";
 
 export const convertCoffeeDtoTOCoffee = (coffee:CoffeeDto):Coffee=>{
     return {
@@ -12,11 +14,24 @@ export const convertCoffeeDtoTOCoffee = (coffee:CoffeeDto):Coffee=>{
         status: coffee.status
     }
 }
+//todo почему не использовается
 export const convertCoffeeTOCoffeeDto = (coffee:Coffee):CoffeeDto=>{
     return {
         name:coffee.name,
         price:coffee.price,
         quantity:coffee.quantity,
         status: coffee.status
+    }
+}
+
+export const convertUserDtoToUser = (user:UserDto)=>{
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(user.password, salt);
+    return {
+        id:uuidv4(),
+        hashPassword: hash,
+        email: user.email,
+        birthday: user.birthday,
+        role:Roles.USER
     }
 }

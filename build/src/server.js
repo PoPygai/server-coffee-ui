@@ -6,10 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.launchServer = void 0;
 const express_1 = __importDefault(require("express"));
 const config_1 = require("./config/config");
-const router_1 = require("./routers/router");
+const productsCoffeeRouter_1 = require("./routers/productsCoffeeRouter");
 const node_fs_1 = require("node:fs");
 const morgan_1 = __importDefault(require("morgan"));
 const errorHandler_1 = require("./errorHandler/errorHandler");
+const accountRouter_1 = require("./routers/accountRouter");
+const authentication_1 = require("./middleware/authentication");
+const authorization_1 = require("./middleware/authorization");
 const launchServer = () => {
     //=============Server================================
     const logStream = (0, node_fs_1.createWriteStream)("./logs.log");
@@ -21,8 +24,11 @@ const launchServer = () => {
     app.use((0, morgan_1.default)('dev'));
     app.use((0, morgan_1.default)('combined', { stream: logStream }));
     app.use(express_1.default.json());
+    app.use(authentication_1.authentication);
+    app.use(authorization_1.authorization);
     //=====================Router=======================
-    app.use('/', router_1.router);
+    app.use('/account', accountRouter_1.accountRouter);
+    app.use('/', productsCoffeeRouter_1.productsCoffeeRouter);
     //====================errorHandling============
     app.use(errorHandler_1.errorHandler);
 };

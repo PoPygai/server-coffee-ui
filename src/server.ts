@@ -1,9 +1,12 @@
 import express from 'express'
 import {configuration} from "./config/config";
-import {router} from "./routers/router";
+import {productsCoffeeRouter} from "./routers/productsCoffeeRouter";
 import {createWriteStream} from "node:fs";
 import morgan from "morgan";
 import {errorHandler} from "./errorHandler/errorHandler";
+import {accountRouter} from "./routers/accountRouter";
+import {authentication} from "./middleware/authentication";
+import {authorization} from "./middleware/authorization";
 
 export const launchServer = ()=>{
 
@@ -17,10 +20,13 @@ export const launchServer = ()=>{
     //============================Middleware================
     app.use(morgan('dev'));
     app.use(morgan('combined', {stream: logStream}));
-
     app.use(express.json());
+
+    app.use(authentication)
+    app.use(authorization)
     //=====================Router=======================
-    app.use('/',router);
+    app.use('/account', accountRouter)
+    app.use('/',productsCoffeeRouter);
 
     //====================errorHandling============
     app.use(errorHandler)

@@ -10,11 +10,8 @@ export class controllerProductCoffee {
 
     async addCoffee(product:CoffeeDto): Promise<Coffee> {
         const coffee = convertCoffeeDtoTOCoffee(product);
-        const res = await this.services.addCoffee(coffee);
-        if(res){
-            return coffee;
-        }
-        throw new Error(JSON.stringify({status: 400, message: `Book with id ${coffee.id} not added`}))
+        await this.services.addCoffee(coffee);
+        return coffee;
     }
 
     async changeCoffee(id:string,coffee:CoffeeDto): Promise<any> {

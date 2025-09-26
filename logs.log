@@ -1,3 +1,1 @@
-::1 - - [23/Sep/2025:13:57:10 +0000] "GET /coffee-products HTTP/1.1" 200 232 "-" "PostmanRuntime/7.46.1"
-::1 - - [23/Sep/2025:13:58:56 +0000] "DELETE /coffee-product/25f0c0de-8c8e-48b6-9e9e-5b4500f7c263 HTTP/1.1" 200 - "-" "PostmanRuntime/7.46.1"
-::1 - - [23/Sep/2025:13:59:02 +0000] "GET /coffee-products HTTP/1.1" 200 114 "-" "PostmanRuntime/7.46.1"
+::1 - zxc [26/Sep/2025:12:59:45 +0000] "GET /coffee-product/sqwe HTTP/1.1" 500 - "-" "PostmanRuntime/7.47.1"
