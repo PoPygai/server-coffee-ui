@@ -40,7 +40,7 @@ const convertUserDtoToUser = (user) => {
 };
 exports.convertUserDtoToUser = convertUserDtoToUser;
 const normalizePath = (path) => {
-    if (path.startsWith("/account"))
+    if (path.startsWith("/accounts/account"))
         return "/account";
     if (path.startsWith("/coffee-product"))
         return "/coffee-product";

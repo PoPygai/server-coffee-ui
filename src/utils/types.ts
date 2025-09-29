@@ -2,10 +2,10 @@ import {Request} from "express";
 import {RowDataPacket} from "mysql2";
 
 export enum Roles{
-    GUEST,
-    USER,
-    ADMIN,
-    ROOT,
+    GUEST='guess',
+    USER='user',
+    ADMIN='admin',
+    ROOT='root',
 }
 
 export interface AuthRequest extends Request{

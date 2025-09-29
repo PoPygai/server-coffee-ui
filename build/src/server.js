@@ -27,7 +27,7 @@ const launchServer = () => {
     app.use(authentication_1.authentication);
     app.use(authorization_1.authorization);
     //=====================Router=======================
-    app.use('/account', accountRouter_1.accountRouter);
+    app.use('/accounts/', accountRouter_1.accountRouter);
     app.use('/', productsCoffeeRouter_1.productsCoffeeRouter);
     //====================errorHandling============
     app.use(errorHandler_1.errorHandler);

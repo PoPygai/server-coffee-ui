@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Roles = void 0;
 var Roles;
 (function (Roles) {
-    Roles[Roles["GUEST"] = 0] = "GUEST";
-    Roles[Roles["USER"] = 1] = "USER";
-    Roles[Roles["ADMIN"] = 2] = "ADMIN";
-    Roles[Roles["ROOT"] = 3] = "ROOT";
+    Roles["GUEST"] = "guess";
+    Roles["USER"] = "user";
+    Roles["ADMIN"] = "admin";
+    Roles["ROOT"] = "root";
 })(Roles || (exports.Roles = Roles = {}));

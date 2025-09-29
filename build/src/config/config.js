@@ -19,6 +19,13 @@ exports.configuration = {
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD
     }),
+    poolAccounts: promise_1.default.createPool({
+        host: process.env.DB_HOST_ACCOUNTS,
+        port: process.env.DB_PORT_ACCOUNTS ? +process.env.DB_PORT_ACCOUNTS : 3306,
+        database: process.env.DATABASE,
+        user: process.env.DB_ACCOUNTS,
+        password: process.env.DB_PASSWORD_ACCOUNTS
+    }),
     skipPath: ["POST/account", "GET/coffee-product"],
     pathsRoles: {
         "PUT/coffee-product": [types_1.Roles.ADMIN],

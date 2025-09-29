@@ -38,7 +38,7 @@ export const convertUserDtoToUser = (user:UserDto)=>{
 
 export const normalizePath = (path:string) => {
 
-    if(path.startsWith("/account")) return "/account";
+    if(path.startsWith("/accounts/account")) return "/account";
     if(path.startsWith("/coffee-product")) return "/coffee-product";
     return path;
 

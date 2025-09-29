@@ -27,7 +27,7 @@ export const configuration:AppConfig = {
         password:process.env.DB_PASSWORD
     }),
     poolAccounts: mysql.createPool({
-        host:process.env.DB_HOST_ACCOUNTS ,
+        host:process.env.DB_HOST_ACCOUNTS,
         port:process.env.DB_PORT_ACCOUNTS ? +process.env.DB_PORT_ACCOUNTS :  3306,
         database:process.env.DATABASE,
         user:process.env.DB_ACCOUNTS,

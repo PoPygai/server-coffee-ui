@@ -13,7 +13,7 @@ class ProductCoffeeServicesImpl {
         }
     }
     async changeCoffee(id, coffee) {
-        const [result] = await config_1.configuration.pool.query("UPDATE products_coffee SET name = ?, price = ?, quantity = ?, status = ? WHERE id = ?", [coffee.name, coffee.price, coffee.quantity, coffee.status, id]);
+        const [result] = await config_1.configuration.pool.query("UPDATE products_coffee SET name=?, price =?, quantity=?, status=? WHERE id=?", [coffee.name, coffee.price, coffee.quantity, coffee.status, id]);
         return Promise.resolve(!result ? false : true);
     }
     async quantityCoffeeByName(name) {
