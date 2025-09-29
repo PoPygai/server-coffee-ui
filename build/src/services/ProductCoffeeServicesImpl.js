@@ -18,7 +18,7 @@ class ProductCoffeeServicesImpl {
     }
     async quantityCoffeeByName(name) {
         const [result] = await config_1.configuration.pool.query("SELECT name, quantity FROM products_coffee WHERE name= ?", [name]);
-        return Promise.resolve(result);
+        return Promise.resolve(result[0]);
     }
     async getAllCoffees() {
         const [result] = await config_1.configuration.pool.query("SELECT * FROM products_coffee");
@@ -26,7 +26,7 @@ class ProductCoffeeServicesImpl {
     }
     async getCoffeeByName(name) {
         const [result] = await config_1.configuration.pool.query("SELECT * FROM products_coffee WHERE name=?", [name]);
-        return Promise.resolve(result);
+        return Promise.resolve(result[0]);
     }
     async removeCoffee(id) {
         await config_1.configuration.pool.query("DELETE FROM products_coffee WHERE id=?", [id]);

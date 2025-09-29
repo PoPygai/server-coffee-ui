@@ -7,6 +7,7 @@ exports.configuration = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const promise_1 = __importDefault(require("mysql2/promise"));
 const AccountServiceImpl_1 = require("../services/AccountServiceImpl");
+const types_1 = require("../utils/types");
 dotenv_1.default.config();
 exports.configuration = {
     port: Number(process.env.PORT),
@@ -17,5 +18,14 @@ exports.configuration = {
         database: process.env.DATABASE,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD
-    })
+    }),
+    skipPath: ["POST/account", "GET/coffee-product"],
+    pathsRoles: {
+        "PUT/coffee-product": [types_1.Roles.ADMIN],
+        "DELETE/coffee-product": [types_1.Roles.ADMIN],
+        "POST/coffee-product": [types_1.Roles.ADMIN],
+        "GET/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
+        "PUT/account": [types_1.Roles.USER, types_1.Roles.ADMIN],
+        "DELETE/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT]
+    }
 };

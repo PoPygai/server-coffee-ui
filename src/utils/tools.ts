@@ -28,10 +28,18 @@ export const convertUserDtoToUser = (user:UserDto)=>{
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(user.password, salt);
     return {
-        id:uuidv4(),
+        login:user.login,
         hashPassword: hash,
         email: user.email,
         birthday: user.birthday,
         role:Roles.USER
     }
+}
+
+export const normalizePath = (path:string) => {
+
+    if(path.startsWith("/account")) return "/account";
+    if(path.startsWith("/coffee-product")) return "/coffee-product";
+    return path;
+
 }

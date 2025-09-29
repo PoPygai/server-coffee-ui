@@ -13,6 +13,8 @@ const basicAuth = async(header:string,req:AuthRequest) => {
             req.login = login;
             req.role = result.role;
         }
+        console.log("reader not authenticated")
+
     } catch(e){
         console.log("reader not authenticated")
     }

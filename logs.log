@@ -1,1 +1,2 @@
-::1 - zxc [26/Sep/2025:12:59:45 +0000] "GET /coffee-product/sqwe HTTP/1.1" 500 - "-" "PostmanRuntime/7.47.1"
+::1 - - [28/Sep/2025:12:28:29 +0000] "GET /coffee-product/quantity/Arabic HTTP/1.1" 200 32 "-" "PostmanRuntime/7.48.0"
+::1 - - [28/Sep/2025:12:29:25 +0000] "GET /coffee-product/Arabic HTTP/1.1" 200 112 "-" "PostmanRuntime/7.48.0"

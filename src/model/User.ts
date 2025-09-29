@@ -2,7 +2,7 @@ import {Roles} from "../utils/types";
 
 
 export type User = {
-    id: string;
+    login: string;
     hashPassword: string;
     email: string;
     birthday: string;

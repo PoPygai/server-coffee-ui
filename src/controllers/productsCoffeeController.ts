@@ -1,7 +1,8 @@
-import {ProductCoffeeServicesImpl} from "../services/ProductCoffeeServicesImpl";
+import { ProductCoffeeServicesImpl} from "../services/ProductCoffeeServicesImpl";
 import {convertCoffeeDtoTOCoffee} from "../utils/tools";
 import {CoffeeDto} from "../model/CoffeeDto";
 import {Coffee} from "../model/Coffee";
+import {CoffeeQuantity} from "../utils/types";
 
 
 export class controllerProductCoffee {
@@ -25,7 +26,7 @@ export class controllerProductCoffee {
         throw new Error(JSON.stringify({status:400 ,message:"Coffee not updated"}))
     }
 
-    async quantityCoffeeByName(name:string): Promise<string> {
+    async quantityCoffeeByName(name:string): Promise<CoffeeQuantity> {
         return this.services.quantityCoffeeByName(name);
     }
 

@@ -1,29 +1,18 @@
 import {AuthRequest} from "../utils/types";
 import {NextFunction, Response} from "express";
+import {normalizePath} from "../utils/tools";
+import {configuration} from "../config/config";
 
 
 export const authorization = async(req:AuthRequest,res:Response,next:NextFunction)=>{
 
-    //todo make normonizepath
-    const request = req.method + req.path;
-    console.log(request);
-
-    //todo
-    const skipPath = ["POST/account"]
-
-
-    if(skipPath.some((path)=>path.includes(request))){
+    const request = req.method + normalizePath(req.path);
+    if(configuration.skipPath.some((path)=>path.includes(request)))
         return next();
-    }
+    if(req.role && configuration.pathsRoles[request].some(role => role === req.role))
+        return next();
 
-
-    if(req.role!==undefined && req.login!==undefined){
-
-    }
-    next(JSON.stringify({status:403,statusText:"You dont have rights"}))
+    next(JSON.stringify({status:403,statusText:"You dont have rights"}));
 
 
 }
-
-const skipPath = ["POST/account","POST/account1","POST/account2"]
-console.log();
