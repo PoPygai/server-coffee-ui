@@ -19,5 +19,8 @@ class accountController {
     async deleteAccount(login) {
         await config_1.configuration.accService.deleteAccount(login);
     }
+    async singIn(login, password) {
+        return await config_1.configuration.accService.signIn(login, password);
+    }
 }
 exports.accountController = accountController;

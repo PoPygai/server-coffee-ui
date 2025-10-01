@@ -4,6 +4,8 @@ import {CoffeeDto} from "../model/CoffeeDto";
 import {UserDto} from "../model/UserDto";
 import bcrypt from "bcryptjs";
 import {Roles} from "./types";
+import jwt, {SignOptions} from "jsonwebtoken";
+import {log} from "node:util";
 
 export const convertCoffeeDtoTOCoffee = (coffee:CoffeeDto):Coffee=>{
     return {
@@ -42,4 +44,15 @@ export const normalizePath = (path:string) => {
     if(path.startsWith("/coffee-product")) return "/coffee-product";
     return path;
 
+}
+
+
+export const getJWT = (login:string, roles:Roles) => {
+    //todo
+    const options:SignOptions = {
+        expiresIn: process.env.JWT_EXP as any,
+        subject: login,
+    }
+    const token = jwt.sign({roles},process.env.JWT_KEY!,options);
+    return token;
 }

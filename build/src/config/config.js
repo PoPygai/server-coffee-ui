@@ -26,7 +26,7 @@ exports.configuration = {
         user: process.env.DB_ACCOUNTS,
         password: process.env.DB_PASSWORD_ACCOUNTS
     }),
-    skipPath: ["POST/account", "GET/coffee-product"],
+    skipPath: ["POST/account", "GET/coffee-product", "GET/accounts/signin"],
     pathsRoles: {
         "PUT/coffee-product": [types_1.Roles.ADMIN],
         "DELETE/coffee-product": [types_1.Roles.ADMIN],

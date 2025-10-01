@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authentication = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const config_1 = require("../config/config");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const basicAuth = async (header, req) => {
     const hash = header.split(" ")[1];
     const decoded = Buffer.from(hash, "base64").toString("utf8");
@@ -22,10 +23,27 @@ const basicAuth = async (header, req) => {
         console.log("reader not authenticated");
     }
 };
+const jwtAuth = (headers, req) => {
+    //todo
+    if (!process.env.JWT_KEY)
+        throw new Error(JSON.stringify({ status: 500, message: "Problem with server" }));
+    const token = headers.substring("Bearer ".length);
+    try {
+        const payload = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY);
+        req.login = payload.sub;
+        req.role = payload.roles;
+    }
+    catch (e) {
+        throw new Error(JSON.stringify({ status: 401, message: "Invalid token" }));
+    }
+};
 const authentication = async (req, res, next) => {
     const header = req.header('authorization');
-    if (header && header.startsWith("Basic ")) {
-        await basicAuth(header, req);
+    if (header) {
+        if (header.startsWith("Basic "))
+            await basicAuth(header, req);
+        else if (header.startsWith("Bearer "))
+            await jwtAuth(header, req);
     }
     next();
 };

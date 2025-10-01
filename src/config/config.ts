@@ -33,7 +33,7 @@ export const configuration:AppConfig = {
         user:process.env.DB_ACCOUNTS,
         password:process.env.DB_PASSWORD_ACCOUNTS
     }),
-    skipPath :["POST/account","GET/coffee-product"],
+    skipPath :["POST/account","GET/coffee-product","GET/accounts/signin"],
     pathsRoles:{
         "PUT/coffee-product":[Roles.ADMIN],
         "DELETE/coffee-product":[Roles.ADMIN],

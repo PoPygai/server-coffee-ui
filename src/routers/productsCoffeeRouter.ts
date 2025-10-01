@@ -1,7 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import {controllerProductCoffee} from "../controllers/productsCoffeeController";
-import {CoffeeDto, coffeeSchema} from "../model/CoffeeDto";
+import {CoffeeDto} from "../model/CoffeeDto";
 
 const controller = new controllerProductCoffee();
 
@@ -35,18 +35,11 @@ productsCoffeeRouter.delete('/coffee-product/:id', asyncHandler(async(req, res)=
 productsCoffeeRouter.put('/coffee-product/:id', asyncHandler(async(req, res)=>{
     const id  = req.params.id;
     if (!id) throw new Error(JSON.stringify({status:400,message:'Bad id'}));
-    const {error,value}= coffeeSchema.validate(req.body);
-    if(error) {
-        throw new Error(JSON.stringify({status:400,message:error.message}))
 
-    }
-
-    const result = await controller.changeCoffee(id,value);
+    const result = await controller.changeCoffee(id,req.body);
     res.status(200).json(result);
 }));
 productsCoffeeRouter.post('/coffee-product', asyncHandler(async(req, res)=>{
-    const {error,value} = coffeeSchema.validate(req.body);
-    if(error) throw new Error(JSON.stringify({status:400,message:error.message}));
-    const result = await controller.addCoffee(value);
+    const result = await controller.addCoffee(req.body);
     res.status(200).json(result);
 }));

@@ -7,4 +7,5 @@ export interface AccountService {
     addAccount(user:User): Promise<void>;
     deleteAccount(login:string): Promise<void>;
     updateAccount(userDto:UserDto): Promise<void>;
+    signIn(login:string,password:string):Promise<string>;
 }

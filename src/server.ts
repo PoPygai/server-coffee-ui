@@ -7,6 +7,7 @@ import {errorHandler} from "./errorHandler/errorHandler";
 import {accountRouter} from "./routers/accountRouter";
 import {authentication} from "./middleware/authentication";
 import {authorization} from "./middleware/authorization";
+import {validate} from './utils/validate'
 
 export const launchServer = ()=>{
 
@@ -24,6 +25,7 @@ export const launchServer = ()=>{
 
     app.use(authentication)
     app.use(authorization)
+    app.use(validate)
     //=====================Router=======================
     app.use('/accounts/', accountRouter)
     app.use('/',productsCoffeeRouter);
