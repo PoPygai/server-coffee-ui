@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductCoffeeServicesImpl = void 0;
 const config_1 = require("../config/config");
 class ProductCoffeeServicesImpl {
+    // async orderCoffee (login: string, orders: Order[]) {
+    //
+    // };
     async addCoffee(coffee) {
         try {
             await config_1.configuration.pool.query("INSERT INTO products_coffee VALUES(?,?,?,?,?)", [coffee.id, coffee.name, coffee.price, coffee.quantity, coffee.status]);
@@ -18,6 +21,8 @@ class ProductCoffeeServicesImpl {
     }
     async quantityCoffeeByName(name) {
         const [result] = await config_1.configuration.pool.query("SELECT name, quantity FROM products_coffee WHERE name= ?", [name]);
+        if (!result[0])
+            throw new Error(JSON.stringify({ status: 400, message: `No product with name ${name} found.` }));
         return Promise.resolve(result[0]);
     }
     async getAllCoffees() {

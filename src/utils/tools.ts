@@ -5,9 +5,8 @@ import {UserDto} from "../model/UserDto";
 import bcrypt from "bcryptjs";
 import {Roles} from "./types";
 import jwt, {SignOptions} from "jsonwebtoken";
-import {log} from "node:util";
 
-export const convertCoffeeDtoTOCoffee = (coffee:CoffeeDto):Coffee=>{
+export const convertCoffeeDtoToCoffee = (coffee:CoffeeDto):Coffee=>{
     return {
         id:uuidv4(),
         name:coffee.name,
@@ -17,7 +16,7 @@ export const convertCoffeeDtoTOCoffee = (coffee:CoffeeDto):Coffee=>{
     }
 }
 //todo почему не использовается
-export const convertCoffeeTOCoffeeDto = (coffee:Coffee):CoffeeDto=>{
+export const convertCoffeeToCoffeeDto = (coffee:Coffee):CoffeeDto=>{
     return {
         name:coffee.name,
         price:coffee.price,

@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import {controllerProductCoffee} from "../controllers/productsCoffeeController";
 import {CoffeeDto} from "../model/CoffeeDto";
+import {AuthRequest} from "../utils/types";
 
 const controller = new controllerProductCoffee();
 
@@ -43,3 +44,7 @@ productsCoffeeRouter.post('/coffee-product', asyncHandler(async(req, res)=>{
     const result = await controller.addCoffee(req.body);
     res.status(200).json(result);
 }));
+productsCoffeeRouter.get('/order', asyncHandler(async(req:AuthRequest, res)=>{
+    const result = await controller.order(req.login!,req.body);
+    res.status(200).json(result);
+}))

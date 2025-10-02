@@ -34,5 +34,12 @@ class controllerProductCoffee {
     async removeCoffee(id) {
         await this.services.removeCoffee(id);
     }
+    async order(login, body) {
+        for (let i = 0; i < body.length; i++) {
+            let { quantity } = await this.services.quantityCoffeeByName(body[i].name);
+            // if(quantity-body[i].count < 0 ) {}
+        }
+        // return await this.services.orderCoffee(body);
+    }
 }
 exports.controllerProductCoffee = controllerProductCoffee;

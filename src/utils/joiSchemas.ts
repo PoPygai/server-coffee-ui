@@ -15,9 +15,11 @@ export const CoffeeDtoSchema = Joi.object({
     status: Joi.string().valid(CoffeeStatus.SOLD,CoffeeStatus.ON_STOCK),
 })
 
-export const joiSchemas:Record<string, Joi.ObjectSchema> = {
+export const OrderSchema = Joi.array().items(Joi.object({name: Joi.string().required(),count: Joi.number().min(0).max(999).required()}));
+export const joiSchemas:Record<string, Joi.ObjectSchema | Joi.ArraySchema> = {
     'POST/account' :  AccountDtoSchema,
     'PUT/account' :  AccountDtoSchema,
     'PUT/coffee-product' :  CoffeeDtoSchema,
     'POST/coffee-product' :  CoffeeDtoSchema,
+    'GET/order':  OrderSchema,
 }

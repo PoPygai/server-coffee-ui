@@ -33,6 +33,7 @@ exports.configuration = {
         "POST/coffee-product": [types_1.Roles.ADMIN],
         "GET/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
         "PUT/account": [types_1.Roles.USER, types_1.Roles.ADMIN],
-        "DELETE/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT]
+        "DELETE/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
+        "GET/order": [types_1.Roles.USER]
     }
 };

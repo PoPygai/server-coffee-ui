@@ -13,6 +13,7 @@ const errorHandler_1 = require("./errorHandler/errorHandler");
 const accountRouter_1 = require("./routers/accountRouter");
 const authentication_1 = require("./middleware/authentication");
 const authorization_1 = require("./middleware/authorization");
+const validate_1 = require("./utils/validate");
 const launchServer = () => {
     //=============Server================================
     const logStream = (0, node_fs_1.createWriteStream)("./logs.log");
@@ -26,6 +27,7 @@ const launchServer = () => {
     app.use(express_1.default.json());
     app.use(authentication_1.authentication);
     app.use(authorization_1.authorization);
+    app.use(validate_1.validateBody);
     //=====================Router=======================
     app.use('/accounts/', accountRouter_1.accountRouter);
     app.use('/', productsCoffeeRouter_1.productsCoffeeRouter);

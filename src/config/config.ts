@@ -40,7 +40,8 @@ export const configuration:AppConfig = {
         "POST/coffee-product":[Roles.ADMIN],
         "GET/account":[Roles.ADMIN,Roles.ROOT],
         "PUT/account":[Roles.USER,Roles.ADMIN],
-        "DELETE/account":[Roles.ADMIN,Roles.ROOT]
+        "DELETE/account":[Roles.ADMIN,Roles.ROOT],
+        "GET/order":[Roles.USER]
     }
 
 }

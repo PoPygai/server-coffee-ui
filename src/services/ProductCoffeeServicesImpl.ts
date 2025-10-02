@@ -2,11 +2,44 @@ import {ProductCoffee} from "./ProductCoffee";
 import {Coffee} from "../model/Coffee";
 import {CoffeeDto} from "../model/CoffeeDto";
 import {configuration} from "../config/config";
-import {CoffeeQuantity} from "../utils/types";
+import {CoffeeQuantity, Order, Receipt} from "../utils/types";
+import {convertCoffeeToCoffeeDto} from "../utils/tools";
+import {v4 as uuidv4} from "uuid";
+
+
+export class ProductCoffeeServicesImpl implements ProductCoffee {
+    async orderCoffee (login: string, orders: Order[]) {
+        const coffeesDto: CoffeeDto[] = [];
+        let sum = 0;
+        for (let i = 0; i <orders.length ; i++) {
+            const coffee = await this.getCoffeeByName(orders[i].name);
+            const coffeeDto = convertCoffeeToCoffeeDto(coffee);
+            coffeeDto.quantity = orders[i].count;
+            sum += coffeeDto.quantity * coffeeDto.price;
+            coffeesDto.push(coffeeDto);
+            await this.changeQuantity(login,orders[i].count);
+
+        }
+        
+        //todo нужен запрос к изменинию юзера заказов
+
+        return Promise.resolve({
+            orderId:uuidv4(),
+            date:new Date().toLocaleString("ru-RU", { hour12: false }),
+            nameUser:login,
+            orders: coffeesDto,
+            cost:sum
+
+        })
+
+    };
+
+    async changeQuantity(login:string, count:number) {
+        await configuration.pool.query("UPDATE products_coffee SET quantity =quantity-? WHERE login = ?;",[count,login]);
+    }
 
 
 
-export class ProductCoffeeServicesImpl implements ProductCoffee{
     async addCoffee(coffee: Coffee): Promise<void> {
 
         try{
@@ -26,6 +59,7 @@ export class ProductCoffeeServicesImpl implements ProductCoffee{
     }
     async quantityCoffeeByName(name: string): Promise<CoffeeQuantity> {
         const [result] = await configuration.pool.query<CoffeeQuantity[]>("SELECT name, quantity FROM products_coffee WHERE name= ?",[name]);
+        if(!result[0]) throw new Error(JSON.stringify({status: 400,message:`No product with name ${name} found.`}))
         return Promise.resolve(result[0]);
     }
     async getAllCoffees(): Promise<Coffee[]> {

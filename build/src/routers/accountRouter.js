@@ -7,7 +7,6 @@ exports.accountRouter = void 0;
 const express_1 = require("express");
 const accountController_1 = require("../controllers/accountController");
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const UserDto_1 = require("../model/UserDto");
 exports.accountRouter = (0, express_1.Router)();
 const controller = new accountController_1.accountController();
 exports.accountRouter.get('/account/:login', (0, express_async_handler_1.default)(async (req, res) => {
@@ -18,17 +17,11 @@ exports.accountRouter.get('/account/:login', (0, express_async_handler_1.default
     res.status(200).json(result);
 }));
 exports.accountRouter.post('/account', (0, express_async_handler_1.default)(async (req, res) => {
-    const { error, value } = UserDto_1.userAccountSchema.validate(req.body);
-    if (error)
-        throw new Error(JSON.stringify({ status: 400, message: error.message }));
-    const result = await controller.addAccount(value);
+    const result = await controller.addAccount(req.body);
     res.status(200).json(result);
 }));
 exports.accountRouter.put('/account', (0, express_async_handler_1.default)(async (req, res) => {
-    const { error, value } = UserDto_1.userAccountSchema.validate(req.body);
-    if (error)
-        throw new Error(JSON.stringify({ status: 400, message: error.message }));
-    const result = await controller.updateAccount(value);
+    const result = await controller.updateAccount(req.body);
     res.status(200).json(result);
 }));
 exports.accountRouter.delete('/account/:login', (0, express_async_handler_1.default)(async (req, res) => {

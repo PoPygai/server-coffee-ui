@@ -1,6 +1,6 @@
 import {Coffee} from "../model/Coffee";
 import {CoffeeDto} from "../model/CoffeeDto";
-import {CoffeeQuantity} from "../utils/types";
+import {CoffeeQuantity, Order, Receipt} from "../utils/types";
 
 
 export interface ProductCoffee {
@@ -10,5 +10,5 @@ export interface ProductCoffee {
     quantityCoffeeByName: (name:string) => Promise<CoffeeQuantity>;
     getAllCoffees: () => Promise<Coffee[]>;
     getCoffeeByName: (name:string) => Promise<Coffee>;
-    //todo getOrder и тд
+    orderCoffee : (login:string,orders:Order[])=>Promise<Receipt>;
 }

@@ -7,7 +7,6 @@ exports.productsCoffeeRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const productsCoffeeController_1 = require("../controllers/productsCoffeeController");
-const CoffeeDto_1 = require("../model/CoffeeDto");
 const controller = new productsCoffeeController_1.controllerProductCoffee();
 exports.productsCoffeeRouter = express_1.default.Router();
 exports.productsCoffeeRouter.get('/coffee-product/:name', (0, express_async_handler_1.default)(async (req, res) => {
@@ -39,17 +38,14 @@ exports.productsCoffeeRouter.put('/coffee-product/:id', (0, express_async_handle
     const id = req.params.id;
     if (!id)
         throw new Error(JSON.stringify({ status: 400, message: 'Bad id' }));
-    const { error, value } = CoffeeDto_1.coffeeSchema.validate(req.body);
-    if (error) {
-        throw new Error(JSON.stringify({ status: 400, message: error.message }));
-    }
-    const result = await controller.changeCoffee(id, value);
+    const result = await controller.changeCoffee(id, req.body);
     res.status(200).json(result);
 }));
 exports.productsCoffeeRouter.post('/coffee-product', (0, express_async_handler_1.default)(async (req, res) => {
-    const { error, value } = CoffeeDto_1.coffeeSchema.validate(req.body);
-    if (error)
-        throw new Error(JSON.stringify({ status: 400, message: error.message }));
-    const result = await controller.addCoffee(value);
+    const result = await controller.addCoffee(req.body);
+    res.status(200).json(result);
+}));
+exports.productsCoffeeRouter.get('/order', (0, express_async_handler_1.default)(async (req, res) => {
+    const result = await controller.order(req.login, req.body);
     res.status(200).json(result);
 }));

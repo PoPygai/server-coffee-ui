@@ -1,8 +1,8 @@
 import { ProductCoffeeServicesImpl} from "../services/ProductCoffeeServicesImpl";
-import {convertCoffeeDtoTOCoffee} from "../utils/tools";
+import {convertCoffeeDtoToCoffee} from "../utils/tools";
 import {CoffeeDto} from "../model/CoffeeDto";
 import {Coffee} from "../model/Coffee";
-import {CoffeeQuantity} from "../utils/types";
+import {CoffeeQuantity, Order} from "../utils/types";
 
 
 export class controllerProductCoffee {
@@ -10,7 +10,7 @@ export class controllerProductCoffee {
     private services = new ProductCoffeeServicesImpl();
 
     async addCoffee(product:CoffeeDto): Promise<Coffee> {
-        const coffee = convertCoffeeDtoTOCoffee(product);
+        const coffee = convertCoffeeDtoToCoffee(product);
         await this.services.addCoffee(coffee);
         return coffee;
     }
@@ -42,4 +42,12 @@ export class controllerProductCoffee {
         await this.services.removeCoffee(id);
     }
 
+    async order(login:string,body:Order[]) {
+        for (let i = 0; i < body.length; i++) {
+            let result = await this.services.quantityCoffeeByName(body[i].name)
+            let quantity =  result.quantity as number;
+            if(quantity-body[i].count < 0 ) throw new Error(JSON.stringify({status:400 ,message:"Coffee not enough for your order "}))
+        }
+        return await this.services.orderCoffee(login,body);
+    }
 }
