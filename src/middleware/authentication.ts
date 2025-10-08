@@ -32,7 +32,6 @@ const jwtAuth = (headers:string,req:AuthRequest)=>{
         req.login = payload.sub;
         req.role = payload.roles;
 
-
     }catch(e){
         throw new Error(JSON.stringify({status:401,message:"Invalid token"}))
     }

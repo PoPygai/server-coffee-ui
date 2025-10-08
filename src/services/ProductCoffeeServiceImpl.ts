@@ -1,41 +1,16 @@
-import {ProductCoffee} from "./ProductCoffee";
+import {ProductCoffeeService} from "./ProductCoffeeService";
 import {Coffee} from "../model/Coffee";
 import {CoffeeDto} from "../model/CoffeeDto";
 import {configuration} from "../config/config";
-import {CoffeeQuantity, Order, Receipt} from "../utils/types";
-import {convertCoffeeToCoffeeDto} from "../utils/tools";
-import {v4 as uuidv4} from "uuid";
+import {CoffeeQuantity} from "../utils/types";
 
 
-export class ProductCoffeeServicesImpl implements ProductCoffee {
-    async orderCoffee (login: string, orders: Order[]) {
-        const coffeesDto: CoffeeDto[] = [];
-        let sum = 0;
-        for (let i = 0; i <orders.length ; i++) {
-            const coffee = await this.getCoffeeByName(orders[i].name);
-            const coffeeDto = convertCoffeeToCoffeeDto(coffee);
-            coffeeDto.quantity = orders[i].count;
-            sum += coffeeDto.quantity * coffeeDto.price;
-            coffeesDto.push(coffeeDto);
-            await this.changeQuantity(login,orders[i].count);
 
-        }
-        
-        //todo нужен запрос к изменинию юзера заказов
+export class ProductCoffeeServiceImpl implements ProductCoffeeService {
 
-        return Promise.resolve({
-            orderId:uuidv4(),
-            date:new Date().toLocaleString("ru-RU", { hour12: false }),
-            nameUser:login,
-            orders: coffeesDto,
-            cost:sum
 
-        })
-
-    };
-
-    async changeQuantity(login:string, count:number) {
-        await configuration.pool.query("UPDATE products_coffee SET quantity =quantity-? WHERE login = ?;",[count,login]);
+    async changeQuantity(name:string, count:number) {
+        await configuration.pool.query("UPDATE products_coffee SET quantity =quantity-? WHERE name = ?;",[count,name]);
     }
 
 
@@ -52,9 +27,9 @@ export class ProductCoffeeServicesImpl implements ProductCoffee {
     async changeCoffee(id: string, coffee:CoffeeDto): Promise<boolean> {
         const [result] = await configuration.pool.query(
             "UPDATE products_coffee SET name=?, price =?, quantity=?, status=? WHERE id=?",
-            [coffee.name, coffee.price, coffee.quantity, coffee.status, id]
+            [coffee.name, coffee.price, coffee.quantity,  id]
         );
-
+        //todo
         return Promise.resolve(!result ? false : true);
     }
     async quantityCoffeeByName(name: string): Promise<CoffeeQuantity> {
@@ -74,3 +49,4 @@ export class ProductCoffeeServicesImpl implements ProductCoffee {
         await configuration.pool.query("DELETE FROM products_coffee WHERE id=?",[id]);
     }
 }
+

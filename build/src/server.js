@@ -14,6 +14,7 @@ const accountRouter_1 = require("./routers/accountRouter");
 const authentication_1 = require("./middleware/authentication");
 const authorization_1 = require("./middleware/authorization");
 const validate_1 = require("./utils/validate");
+const orderRouter_1 = require("./routers/orderRouter");
 const launchServer = () => {
     //=============Server================================
     const logStream = (0, node_fs_1.createWriteStream)("./logs.log");
@@ -31,6 +32,7 @@ const launchServer = () => {
     //=====================Router=======================
     app.use('/accounts/', accountRouter_1.accountRouter);
     app.use('/', productsCoffeeRouter_1.productsCoffeeRouter);
+    app.use('/orders', orderRouter_1.orderRouter);
     //====================errorHandling============
     app.use(errorHandler_1.errorHandler);
 };

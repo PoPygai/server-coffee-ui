@@ -2,6 +2,7 @@ import {User} from "../model/User";
 import {UserDto} from "../model/UserDto";
 
 
+
 export interface AccountService {
     getAccountByLogin(login:string): Promise<User>;
     addAccount(user:User): Promise<void>;

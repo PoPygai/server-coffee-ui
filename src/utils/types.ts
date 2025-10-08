@@ -18,15 +18,34 @@ export interface CoffeeQuantity extends RowDataPacket {
     name: string;
     quantity: string | number;
 }
+export interface OrderQuantity extends RowDataPacket {
+    orderId:string;
+    nameUser: string;
+    quantity: Date;
+    sum_cost:string;
+}
+export interface OrderItemsQuantity extends RowDataPacket {
+    orderName: string;
+    quantity: number;
+}
 
 export type Receipt = {
     orderId: string;
-    date: string;
     nameUser:string;
+    date: string;
     orders : CoffeeDto[];
     cost:number;
 }
-export type Order = {
+export type OrderDto = {
     name:string;
     count:number;
+}
+//todo
+export type Order = {
+    orderId :string;
+    nameUser :string;
+    date :string;
+    login:string;
+    orders:CoffeeDto[];
+    cost :number;
 }

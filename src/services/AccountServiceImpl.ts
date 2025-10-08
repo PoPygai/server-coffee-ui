@@ -5,8 +5,12 @@ import {UserDto} from "../model/UserDto";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {getJWT} from "../utils/tools";
+import { Order } from "../utils/types";
 
 export class AccountServiceImpl implements AccountService {
+
+
+
     async signIn(login: string, password: string): Promise<string> {
         const user = await configuration.accService.getAccountByLogin(login);
         if(!user) throw new Error(JSON.stringify({status:404 ,message:"No user found"}));

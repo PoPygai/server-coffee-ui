@@ -1,4 +1,4 @@
-import {Roles} from "../utils/types";
+import {Receipt, Roles} from "../utils/types";
 
 
 export type User = {
@@ -6,5 +6,5 @@ export type User = {
     hashPassword: string;
     email: string;
     birthday: string;
-    role:Roles
+    role:Roles;
 }

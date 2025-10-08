@@ -9,8 +9,10 @@ export const authorization = (req:AuthRequest,res:Response,next:NextFunction)=>{
     console.log(request);
     if(configuration.skipPath.some((path)=>path.includes(request)))
         return next();
-    if(req.role && configuration.pathsRoles[request].some(role => role === req.role))
+    if(req.role && configuration.pathsRoles[request].some(role => role === req.role)){
         return next();
+
+    }
 
     next({message : JSON.stringify({status:403,message:"You dont have rights"})});
 

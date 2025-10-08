@@ -8,8 +8,9 @@ const authorization = (req, res, next) => {
     console.log(request);
     if (config_1.configuration.skipPath.some((path) => path.includes(request)))
         return next();
-    if (req.role && config_1.configuration.pathsRoles[request].some(role => role === req.role))
+    if (req.role && config_1.configuration.pathsRoles[request].some(role => role === req.role)) {
         return next();
+    }
     next({ message: JSON.stringify({ status: 403, message: "You dont have rights" }) });
 };
 exports.authorization = authorization;

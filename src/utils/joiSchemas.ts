@@ -1,5 +1,4 @@
 import Joi from "joi";
-import {CoffeeStatus} from "../model/Coffee";
 
 export const AccountDtoSchema = Joi.object({
     login: Joi.string().max(30).required(),
@@ -12,7 +11,6 @@ export const CoffeeDtoSchema = Joi.object({
     name: Joi.string().required(),
     price: Joi.number().min(5).max(99999).required(),
     quantity: Joi.number().min(0).max(999).required(),
-    status: Joi.string().valid(CoffeeStatus.SOLD,CoffeeStatus.ON_STOCK),
 })
 
 export const OrderSchema = Joi.array().items(Joi.object({name: Joi.string().required(),count: Joi.number().min(0).max(999).required()}));
@@ -21,5 +19,5 @@ export const joiSchemas:Record<string, Joi.ObjectSchema | Joi.ArraySchema> = {
     'PUT/account' :  AccountDtoSchema,
     'PUT/coffee-product' :  CoffeeDtoSchema,
     'POST/coffee-product' :  CoffeeDtoSchema,
-    'GET/order':  OrderSchema,
+    'POST/order':  OrderSchema,
 }

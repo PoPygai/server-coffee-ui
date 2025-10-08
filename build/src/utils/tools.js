@@ -3,31 +3,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getJWT = exports.normalizePath = exports.convertUserDtoToUser = exports.convertCoffeeTOCoffeeDto = exports.convertCoffeeDtoTOCoffee = void 0;
+exports.getJWT = exports.normalizePath = exports.convertUserDtoToUser = exports.convertCoffeeToCoffeeDto = exports.convertCoffeeDtoToCoffee = void 0;
 const uuid_1 = require("uuid");
+const Coffee_1 = require("../model/Coffee");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const types_1 = require("./types");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const convertCoffeeDtoTOCoffee = (coffee) => {
+const convertCoffeeDtoToCoffee = (coffee) => {
     return {
         id: (0, uuid_1.v4)(),
         name: coffee.name,
         price: coffee.price,
         quantity: coffee.quantity,
-        status: coffee.status
+        status: Coffee_1.CoffeeStatus.ON_STOCK
     };
 };
-exports.convertCoffeeDtoTOCoffee = convertCoffeeDtoTOCoffee;
-//todo почему не использовается
-const convertCoffeeTOCoffeeDto = (coffee) => {
+exports.convertCoffeeDtoToCoffee = convertCoffeeDtoToCoffee;
+const convertCoffeeToCoffeeDto = (coffee) => {
     return {
         name: coffee.name,
         price: coffee.price,
         quantity: coffee.quantity,
-        status: coffee.status
     };
 };
-exports.convertCoffeeTOCoffeeDto = convertCoffeeTOCoffeeDto;
+exports.convertCoffeeToCoffeeDto = convertCoffeeToCoffeeDto;
 const convertUserDtoToUser = (user) => {
     const salt = bcryptjs_1.default.genSaltSync(10);
     const hash = bcryptjs_1.default.hashSync(user.password, salt);
@@ -45,6 +44,8 @@ const normalizePath = (path) => {
         return "/account";
     if (path.startsWith("/coffee-product"))
         return "/coffee-product";
+    if (path.startsWith("/orders/order"))
+        return "/order";
     return path;
 };
 exports.normalizePath = normalizePath;
