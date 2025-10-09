@@ -14,6 +14,7 @@ export class OrderServiceImpl implements OrderService {
 
         const [rows] = await configuration.pool.query<OrderItemsQuantity[]>("SELECT orderName,quantity FROM order_items WHERE orderId = ?", [id])
         const coffeesDto: CoffeeDto[] = [];
+        //todo
         for (let i = 0; i < rows.length; i++) {
             const coffee = await configuration.coffeeService.getCoffeeByName(rows[i].orderName);
             const coffeeDto = convertCoffeeToCoffeeDto(coffee);
@@ -31,20 +32,22 @@ export class OrderServiceImpl implements OrderService {
         });
     }
 
+    // delete order
     async doneOrder(id: string): Promise<void> {
         try {
             await configuration.pool.query("DELETE FROM order_items WHERE orderId = ?", [id]);
             await configuration.pool.query("DELETE FROM orders WHERE orderId = ?", [id]);
 
         }catch (error) {
-            throw new Error(JSON.stringify({status:401,message:'Invalid credentials'}));
+            throw new Error(JSON.stringify({status:500,message:'Problem while deleting order'}));
         }
     }
     async addOrder(login: string,orders:OrderDto[]): Promise<Receipt> {
         const coffeesDto: CoffeeDto[] = [];
         let sum = 0;
+        // get sum of cost and make array coffeesDto
+        //todo
         for (let i = 0; i < orders.length; i++) {
-            //todo
             const coffee = await configuration.coffeeService.getCoffeeByName(orders[i].name);
             const coffeeDto = convertCoffeeToCoffeeDto(coffee);
             coffeeDto.quantity = orders[i].count;
@@ -56,6 +59,7 @@ export class OrderServiceImpl implements OrderService {
         const now = new Date();
         const date = now.toISOString().slice(0, 19).replace('T', ' ');
 
+
         try{
             await configuration.pool.query('INSERT INTO orders VALUES(?,?,?,?)',[orderId,login,date,sum] );
             for (let i = 0; i < coffeesDto.length; i++) {
@@ -63,12 +67,12 @@ export class OrderServiceImpl implements OrderService {
             }
 
         }catch(e){
-            console.log(e)
-            throw new Error(JSON.stringify({status:401,message:'Invalid credentials'}));
+            await this.doneOrder(orderId);
+            throw new Error(JSON.stringify({status:404,message:'Bad Order'}));
         }
 
+        //change quantity in coffee_products
         for (let i = 0; i < orders.length; i++) {
-            //todo
             await configuration.coffeeService.changeQuantity(orders[i].name,orders[i].count);
         }
 
@@ -80,7 +84,5 @@ export class OrderServiceImpl implements OrderService {
             orders:coffeesDto,
             cost : sum,
         });
-
-
     }
 }

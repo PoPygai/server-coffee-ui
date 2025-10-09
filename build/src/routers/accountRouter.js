@@ -29,7 +29,7 @@ exports.accountRouter.delete('/account/:login', (0, express_async_handler_1.defa
     if (!login)
         throw new Error(JSON.stringify({ status: 400, message: 'Bad Login' }));
     await controller.deleteAccount(login);
-    res.status(200).json({ status: 200, message: 'Account Deleted' });
+    res.status(200).json('Account Deleted');
 }));
 exports.accountRouter.get('/signin', (0, express_async_handler_1.default)(async (req, res) => {
     const login = req.query.login;

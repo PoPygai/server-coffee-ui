@@ -4,7 +4,7 @@ export const AccountDtoSchema = Joi.object({
     login: Joi.string().max(30).required(),
     password: Joi.string().min(8).required(),
     email: Joi.string().email().required(),
-    birthday: Joi.string().length(10).required(),
+    birthday: Joi.date().required(),
 })
 
 export const CoffeeDtoSchema = Joi.object({

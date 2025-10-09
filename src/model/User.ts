@@ -5,6 +5,6 @@ export type User = {
     login: string;
     hashPassword: string;
     email: string;
-    birthday: string;
+    birthday: Date;
     role:Roles;
 }

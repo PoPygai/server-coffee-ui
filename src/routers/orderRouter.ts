@@ -13,13 +13,13 @@ orderRouter.post('/order', asyncHandler(async(req:AuthRequest, res)=>{
 }))
 orderRouter.get('/order/:id', asyncHandler(async(req:AuthRequest, res)=>{
     const id = req.params.id;
-    if(!id) throw new Error(JSON.stringify({status:403,message:'bad id'}))
+    if(!id) throw new Error(JSON.stringify({status:400,message:'Bad id'}))
     const result = await controller.getOrder(id);
     res.status(200).json(result);
 }))
 orderRouter.delete('/order/:id', asyncHandler(async(req:AuthRequest, res)=>{
     const id = req.params.id;
-    if(!id) throw new Error(JSON.stringify({status:403,message:'bad id'}))
+    if(!id) throw new Error(JSON.stringify({status:400,message:'Bad id'}))
     const result = await controller.deleteOrder(id);
     res.status(200).json(result);
 }))

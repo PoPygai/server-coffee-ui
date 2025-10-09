@@ -9,7 +9,7 @@ exports.AccountDtoSchema = joi_1.default.object({
     login: joi_1.default.string().max(30).required(),
     password: joi_1.default.string().min(8).required(),
     email: joi_1.default.string().email().required(),
-    birthday: joi_1.default.string().length(10).required(),
+    birthday: joi_1.default.date().required(),
 });
 exports.CoffeeDtoSchema = joi_1.default.object({
     name: joi_1.default.string().required(),

@@ -59,3 +59,4 @@ const getJWT = (login, roles) => {
     return token;
 };
 exports.getJWT = getJWT;
+console.log(new Date());

@@ -27,7 +27,8 @@ class AccountServiceImpl {
         }
     }
     async deleteAccount(login) {
-        await config_1.configuration.poolAccounts.query("DELETE FROM accounts WHERE login=?", [login]);
+        const [rows] = await config_1.configuration.poolAccounts.query("DELETE FROM accounts WHERE login=?", [login]);
+        console.log(rows);
     }
     async getAccountByLogin(login) {
         const [result] = await config_1.configuration.poolAccounts.query("SELECT * FROM accounts WHERE login=?", [login]);

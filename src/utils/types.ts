@@ -28,6 +28,13 @@ export interface OrderItemsQuantity extends RowDataPacket {
     orderName: string;
     quantity: number;
 }
+export interface UserQuantity extends RowDataPacket {
+    login: string;
+    hashPassword: string;
+    email: string;
+    birthday: Date;
+    role:Roles;
+}
 
 export type Receipt = {
     orderId: string;
@@ -39,13 +46,4 @@ export type Receipt = {
 export type OrderDto = {
     name:string;
     count:number;
-}
-//todo
-export type Order = {
-    orderId :string;
-    nameUser :string;
-    date :string;
-    login:string;
-    orders:CoffeeDto[];
-    cost :number;
 }

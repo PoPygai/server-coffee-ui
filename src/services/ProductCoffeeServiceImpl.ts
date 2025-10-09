@@ -34,7 +34,7 @@ export class ProductCoffeeServiceImpl implements ProductCoffeeService {
     }
     async quantityCoffeeByName(name: string): Promise<CoffeeQuantity> {
         const [result] = await configuration.pool.query<CoffeeQuantity[]>("SELECT name, quantity FROM products_coffee WHERE name= ?",[name]);
-        if(!result[0]) throw new Error(JSON.stringify({status: 400,message:`No product with name ${name} found.`}))
+        if(!result[0]) throw new Error(JSON.stringify({status: 404,message:`No product with name ${name} found.`}))
         return Promise.resolve(result[0]);
     }
     async getAllCoffees(): Promise<Coffee[]> {

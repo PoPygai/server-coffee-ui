@@ -28,12 +28,11 @@ accountRouter.delete('/account/:login', asyncHandler(async (req,res)=>{
     const login = req.params.login;
     if(!login) throw new Error(JSON.stringify({status:400,message:'Bad Login'}));
     await controller.deleteAccount(login);
-    res.status(200).json({status:200,message:'Account Deleted'});
+    res.status(200).json('Account Deleted');
 }))
 accountRouter.get('/signin', asyncHandler(async (req,res)=>{
     const login = req.query.login as string;
     const password = req.query.password as string;
-    //todo
     if (!login|| !password) {
         res.status(400).json({ message: "Login and password required" });
         return

@@ -3,9 +3,8 @@ import {User} from "../model/User";
 import {configuration} from "../config/config";
 import {UserDto} from "../model/UserDto";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import {getJWT} from "../utils/tools";
-import { Order } from "../utils/types";
+import {UserQuantity} from "../utils/types";
 
 export class AccountServiceImpl implements AccountService {
 
@@ -30,12 +29,18 @@ export class AccountServiceImpl implements AccountService {
     }
 
     async deleteAccount(login: string): Promise<void> {
+        const [result] = await configuration.poolAccounts.query<UserQuantity[]>("SELECT * FROM accounts WHERE login=?", [login]);
+        if(!result[0])throw new Error(JSON.stringify({status:404 ,message:"No user found"}));
+
         await configuration.poolAccounts.query("DELETE FROM accounts WHERE login=?", [login]);
+
     }
 
+
     async getAccountByLogin(login: string): Promise<User> {
-        const [result] = await configuration.poolAccounts.query("SELECT * FROM accounts WHERE login=?", [login]);
-        return Promise.resolve((result as User[])[0]);
+        const [result] = await configuration.poolAccounts.query<UserQuantity[]>("SELECT * FROM accounts WHERE login=?", [login]);
+        if(!result[0])throw new Error(JSON.stringify({status:404 ,message:"No user found"}));
+        return Promise.resolve((result[0]));
     }
 
     async updateAccount(account: UserDto): Promise<void> {
