@@ -34,7 +34,6 @@ exports.configuration = {
         password: process.env.DB_PASSWORD_ACCOUNTS
     }),
     skipPath: ["POST/account", "GET/coffee-product", "GET/accounts/signin"],
-    //todo
     pathsRoles: {
         "PUT/coffee-product": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
         "DELETE/coffee-product": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
@@ -42,8 +41,9 @@ exports.configuration = {
         "GET/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
         "PUT/account": [types_1.Roles.USER, types_1.Roles.ADMIN, types_1.Roles.ROOT],
         "DELETE/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
+        "PATCH/account": [types_1.Roles.ADMIN, types_1.Roles.ROOT],
         "POST/order": [types_1.Roles.USER, types_1.Roles.ROOT, types_1.Roles.ADMIN],
         "GET/order": [types_1.Roles.USER, types_1.Roles.ROOT, types_1.Roles.ADMIN],
-        "DELETE/order": [types_1.Roles.USER, types_1.Roles.ROOT, types_1.Roles.ADMIN]
+        "DELETE/order": [types_1.Roles.ROOT, types_1.Roles.ADMIN]
     }
 };

@@ -50,7 +50,6 @@ const normalizePath = (path) => {
 };
 exports.normalizePath = normalizePath;
 const getJWT = (login, roles) => {
-    //todo
     const options = {
         expiresIn: process.env.JWT_EXP,
         subject: login,
@@ -59,4 +58,3 @@ const getJWT = (login, roles) => {
     return token;
 };
 exports.getJWT = getJWT;
-console.log(new Date());

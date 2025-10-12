@@ -7,7 +7,13 @@ exports.AccountServiceImpl = void 0;
 const config_1 = require("../config/config");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const tools_1 = require("../utils/tools");
+const types_1 = require("../utils/types");
 class AccountServiceImpl {
+    async changeRoleAccount(body, userRole) {
+        if (body.role === types_1.Roles.ROOT && userRole === types_1.Roles.ADMIN)
+            throw new Error(JSON.stringify({ status: 403, message: "You dont have rights" }));
+        await config_1.configuration.poolAccounts.query("UPDATE accounts SET role = ? WHERE login = ?", [body.role, body.login]);
+    }
     async signIn(login, password) {
         const user = await config_1.configuration.accService.getAccountByLogin(login);
         if (!user)
@@ -27,12 +33,16 @@ class AccountServiceImpl {
         }
     }
     async deleteAccount(login) {
-        const [rows] = await config_1.configuration.poolAccounts.query("DELETE FROM accounts WHERE login=?", [login]);
-        console.log(rows);
+        const [result] = await config_1.configuration.poolAccounts.query("SELECT * FROM accounts WHERE login=?", [login]);
+        if (!result[0])
+            throw new Error(JSON.stringify({ status: 404, message: "No user found" }));
+        await config_1.configuration.poolAccounts.query("DELETE FROM accounts WHERE login=?", [login]);
     }
     async getAccountByLogin(login) {
         const [result] = await config_1.configuration.poolAccounts.query("SELECT * FROM accounts WHERE login=?", [login]);
-        return Promise.resolve(result[0]);
+        if (!result[0])
+            throw new Error(JSON.stringify({ status: 404, message: "No user found" }));
+        return Promise.resolve((result[0]));
     }
     async updateAccount(account) {
         await config_1.configuration.poolAccounts.query("UPDATE accounts SET login=?,email=?,birthday=? WHERE login=?", [account.login, account.email, account.birthday, account.login]);

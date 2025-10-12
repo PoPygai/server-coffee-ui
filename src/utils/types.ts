@@ -1,6 +1,7 @@
 import {Request} from "express";
 import {RowDataPacket} from "mysql2";
 import {CoffeeDto} from "../model/CoffeeDto";
+import {CoffeeStatus} from "../model/Coffee";
 
 export enum Roles{
     GUEST='guess',
@@ -18,23 +19,35 @@ export interface CoffeeQuantity extends RowDataPacket {
     name: string;
     quantity: string | number;
 }
-export interface OrderQuantity extends RowDataPacket {
+export interface CoffeeReturn  extends RowDataPacket  {
+    id:string,
+    name:string,
+    price:number,
+    quantity:number,
+    status:CoffeeStatus
+}
+
+
+export interface OrderReturn extends RowDataPacket {
     orderId:string;
     nameUser: string;
     quantity: Date;
     sum_cost:string;
 }
-export interface OrderItemsQuantity extends RowDataPacket {
+export interface OrderQuantity extends RowDataPacket {
     orderName: string;
     quantity: number;
 }
-export interface UserQuantity extends RowDataPacket {
+export interface UserReturn extends RowDataPacket {
     login: string;
     hashPassword: string;
     email: string;
     birthday: Date;
     role:Roles;
 }
+
+
+
 
 export type Receipt = {
     orderId: string;

@@ -16,14 +16,14 @@ exports.orderRouter.post('/order', (0, express_async_handler_1.default)(async (r
 exports.orderRouter.get('/order/:id', (0, express_async_handler_1.default)(async (req, res) => {
     const id = req.params.id;
     if (!id)
-        throw new Error(JSON.stringify({ status: 403, message: 'bad id' }));
+        throw new Error(JSON.stringify({ status: 400, message: 'Bad id' }));
     const result = await controller.getOrder(id);
     res.status(200).json(result);
 }));
 exports.orderRouter.delete('/order/:id', (0, express_async_handler_1.default)(async (req, res) => {
     const id = req.params.id;
     if (!id)
-        throw new Error(JSON.stringify({ status: 403, message: 'bad id' }));
+        throw new Error(JSON.stringify({ status: 400, message: 'Bad id' }));
     const result = await controller.deleteOrder(id);
     res.status(200).json(result);
 }));

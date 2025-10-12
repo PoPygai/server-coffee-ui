@@ -16,14 +16,13 @@ class ProductCoffeeServiceImpl {
         }
     }
     async changeCoffee(id, coffee) {
-        const [result] = await config_1.configuration.pool.query("UPDATE products_coffee SET name=?, price =?, quantity=?, status=? WHERE id=?", [coffee.name, coffee.price, coffee.quantity, id]);
-        //todo
-        return Promise.resolve(!result ? false : true);
+        const [result] = await config_1.configuration.pool.query("UPDATE products_coffee SET name=?, price =?, quantity=? WHERE id=?", [coffee.name, coffee.price, coffee.quantity, id]);
+        return Promise.resolve(result.changedRows > 0);
     }
     async quantityCoffeeByName(name) {
         const [result] = await config_1.configuration.pool.query("SELECT name, quantity FROM products_coffee WHERE name= ?", [name]);
         if (!result[0])
-            throw new Error(JSON.stringify({ status: 400, message: `No product with name ${name} found.` }));
+            throw new Error(JSON.stringify({ status: 404, message: `No product with name ${name} found.` }));
         return Promise.resolve(result[0]);
     }
     async getAllCoffees() {

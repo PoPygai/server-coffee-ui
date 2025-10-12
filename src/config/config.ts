@@ -45,17 +45,19 @@ export const configuration:AppConfig = {
         password:process.env.DB_PASSWORD_ACCOUNTS
     }),
     skipPath :["POST/account","GET/coffee-product","GET/accounts/signin"],
-    //todo
     pathsRoles:{
         "PUT/coffee-product":[Roles.ADMIN,Roles.ROOT],
         "DELETE/coffee-product":[Roles.ADMIN,Roles.ROOT],
         "POST/coffee-product":[Roles.ADMIN,Roles.ROOT],
+
         "GET/account":[Roles.ADMIN,Roles.ROOT],
         "PUT/account":[Roles.USER,Roles.ADMIN,Roles.ROOT],
         "DELETE/account":[Roles.ADMIN,Roles.ROOT],
+        "PATCH/account":[Roles.ADMIN,Roles.ROOT],
+
         "POST/order":[Roles.USER,Roles.ROOT,Roles.ADMIN],
         "GET/order":[Roles.USER,Roles.ROOT,Roles.ADMIN],
-        "DELETE/order":[Roles.USER,Roles.ROOT,Roles.ADMIN]
+        "DELETE/order":[Roles.ROOT,Roles.ADMIN]
     }
 
 }

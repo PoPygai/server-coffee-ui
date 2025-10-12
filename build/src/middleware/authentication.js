@@ -5,28 +5,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authentication = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const types_1 = require("../utils/types");
 const config_1 = require("../config/config");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const basicAuth = async (header, req) => {
     const hash = header.split(" ")[1];
     const decoded = Buffer.from(hash, "base64").toString("utf8");
     const [login, password] = decoded.split(":");
-    try {
-        const result = await config_1.configuration.accService.getAccountByLogin(login);
-        if (bcryptjs_1.default.compareSync(password, result.hashPassword)) {
-            req.login = login;
-            req.role = result.role;
-        }
-        console.log("reader not authenticated");
+    if (login === process.env.ROOT_LOGIN && password === process.env.ROOT_PASSWORD) {
+        req.login = login;
+        req.role = types_1.Roles.ROOT;
     }
-    catch (e) {
-        console.log("reader not authenticated");
+    else {
+        try {
+            const result = await config_1.configuration.accService.getAccountByLogin(login);
+            if (bcryptjs_1.default.compareSync(password, result.hashPassword)) {
+                req.login = login;
+                req.role = result.role;
+            }
+            console.log("reader not authenticated");
+        }
+        catch (e) {
+            console.log("reader not authenticated");
+        }
     }
 };
 const jwtAuth = (headers, req) => {
-    //todo
-    if (!process.env.JWT_KEY)
-        throw new Error(JSON.stringify({ status: 500, message: "Problem with server" }));
     const token = headers.substring("Bearer ".length);
     try {
         const payload = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY);

@@ -1,4 +1,5 @@
 import Joi from "joi";
+import {Roles} from "./types";
 
 export const AccountDtoSchema = Joi.object({
     login: Joi.string().max(30).required(),
@@ -13,11 +14,21 @@ export const CoffeeDtoSchema = Joi.object({
     quantity: Joi.number().min(0).max(999).required(),
 })
 
+
 export const OrderSchema = Joi.array().items(Joi.object({name: Joi.string().required(),count: Joi.number().min(0).max(999).required()}));
+
+export const AccountRole = Joi.object({
+    login: Joi.string().max(30).required(),
+    role: Joi.string().valid(Roles.ROOT,Roles.ADMIN,Roles.USER).required()
+})
+
 export const joiSchemas:Record<string, Joi.ObjectSchema | Joi.ArraySchema> = {
     'POST/account' :  AccountDtoSchema,
     'PUT/account' :  AccountDtoSchema,
+    "PATCH/account": AccountRole,
+
     'PUT/coffee-product' :  CoffeeDtoSchema,
     'POST/coffee-product' :  CoffeeDtoSchema,
+
     'POST/order':  OrderSchema,
 }

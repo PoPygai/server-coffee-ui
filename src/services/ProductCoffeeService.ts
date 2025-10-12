@@ -1,6 +1,6 @@
 import {Coffee} from "../model/Coffee";
 import {CoffeeDto} from "../model/CoffeeDto";
-import {CoffeeQuantity, OrderDto, Receipt} from "../utils/types";
+import {CoffeeQuantity, CoffeeReturn} from "../utils/types";
 
 
 export interface ProductCoffeeService {
@@ -8,7 +8,7 @@ export interface ProductCoffeeService {
     changeCoffee: (id:string,coffee:CoffeeDto) => Promise<boolean>;
     removeCoffee: (id:string) => Promise<void>;
     quantityCoffeeByName: (name:string) => Promise<CoffeeQuantity>;
-    getAllCoffees: () => Promise<Coffee[]>;
+    getAllCoffees: () => Promise<CoffeeReturn[]>;
     getCoffeeByName: (name:string) => Promise<Coffee>;
     changeQuantity: (login:string, count:number) => Promise<void>
 }

@@ -1,4 +1,4 @@
-import {Order, OrderDto, Receipt} from "../utils/types";
+import {OrderDto, Receipt} from "../utils/types";
 
 
 export interface OrderService{

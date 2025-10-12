@@ -1,4 +1,4 @@
-import {Order, OrderDto, OrderItemsQuantity, OrderQuantity, Receipt} from "../utils/types";
+import {OrderDto, OrderQuantity, OrderReturn, Receipt} from "../utils/types";
 import {configuration} from "../config/config";
 import {convertCoffeeToCoffeeDto} from "../utils/tools";
 import {CoffeeDto} from "../model/CoffeeDto";
@@ -8,19 +8,20 @@ import {OrderService} from "./OrderService";
 
 export class OrderServiceImpl implements OrderService {
     async getOrderById(id: string): Promise<Receipt> {
-        const [result] = await configuration.pool.query<OrderQuantity[]>("SELECT * FROM orders WHERE orderId = ?", [id]);
+        const [result] = await configuration.pool.query<OrderReturn[]>("SELECT * FROM orders WHERE orderId = ?", [id]);
         if(!result[0]) throw new Error(JSON.stringify({status:403,message:'Order not found'}))
         const {orderId,nameUser,orderDate,sum_cost}= result[0];
 
-        const [rows] = await configuration.pool.query<OrderItemsQuantity[]>("SELECT orderName,quantity FROM order_items WHERE orderId = ?", [id])
+        const [rows] = await configuration.pool.query<OrderQuantity[]>("SELECT orderName,quantity FROM order_items WHERE orderId = ?", [id])
         const coffeesDto: CoffeeDto[] = [];
-        //todo
+
         for (let i = 0; i < rows.length; i++) {
             const coffee = await configuration.coffeeService.getCoffeeByName(rows[i].orderName);
             const coffeeDto = convertCoffeeToCoffeeDto(coffee);
             coffeeDto.quantity = rows[i].quantity;
             coffeesDto.push(coffeeDto);
         }
+
 
 
         return Promise.resolve({
@@ -46,7 +47,6 @@ export class OrderServiceImpl implements OrderService {
         const coffeesDto: CoffeeDto[] = [];
         let sum = 0;
         // get sum of cost and make array coffeesDto
-        //todo
         for (let i = 0; i < orders.length; i++) {
             const coffee = await configuration.coffeeService.getCoffeeByName(orders[i].name);
             const coffeeDto = convertCoffeeToCoffeeDto(coffee);

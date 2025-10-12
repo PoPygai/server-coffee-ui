@@ -4,12 +4,15 @@ import {configuration} from "../config/config";
 import {UserDto} from "../model/UserDto";
 import bcrypt from "bcryptjs";
 import {getJWT} from "../utils/tools";
-import {UserQuantity} from "../utils/types";
+import {Roles, UserReturn} from "../utils/types";
+import {ResultSetHeader} from "mysql2";
 
 export class AccountServiceImpl implements AccountService {
 
-
-
+    async changeRoleAccount(body: { login: string; role: Roles; }, userRole: Roles): Promise<void> {
+        if(body.role === Roles.ROOT && userRole === Roles.ADMIN) throw new Error(JSON.stringify({status:403,message:"You dont have rights"}));
+        await configuration.poolAccounts.query("UPDATE accounts SET role = ? WHERE login = ?", [body.role,body.login]);
+    }
     async signIn(login: string, password: string): Promise<string> {
         const user = await configuration.accService.getAccountByLogin(login);
         if(!user) throw new Error(JSON.stringify({status:404 ,message:"No user found"}));
@@ -17,8 +20,6 @@ export class AccountServiceImpl implements AccountService {
         const token = getJWT(login, user.role)
         return Promise.resolve(token);
     }
-
-
     async addAccount(account: User): Promise<void> {
         try{
             await  configuration.poolAccounts.query("INSERT INTO accounts VALUES(?,?,?,?,?)",[account.login,account.hashPassword,account.email,account.birthday,account.role]);
@@ -27,24 +28,22 @@ export class AccountServiceImpl implements AccountService {
             throw  new Error(JSON.stringify({status: 400,message:er.message}));
         }
     }
-
     async deleteAccount(login: string): Promise<void> {
-        const [result] = await configuration.poolAccounts.query<UserQuantity[]>("SELECT * FROM accounts WHERE login=?", [login]);
+        const [result] = await configuration.poolAccounts.query<UserReturn[]>("SELECT * FROM accounts WHERE login=?", [login]);
         if(!result[0])throw new Error(JSON.stringify({status:404 ,message:"No user found"}));
 
         await configuration.poolAccounts.query("DELETE FROM accounts WHERE login=?", [login]);
 
     }
-
-
     async getAccountByLogin(login: string): Promise<User> {
-        const [result] = await configuration.poolAccounts.query<UserQuantity[]>("SELECT * FROM accounts WHERE login=?", [login]);
+        const [result] = await configuration.poolAccounts.query<UserReturn[]>("SELECT * FROM accounts WHERE login=?", [login]);
         if(!result[0])throw new Error(JSON.stringify({status:404 ,message:"No user found"}));
-        return Promise.resolve((result[0]));
+        return Promise.resolve(result[0]);
     }
 
-    async updateAccount(account: UserDto): Promise<void> {
-        await configuration.poolAccounts.query("UPDATE accounts SET login=?,email=?,birthday=? WHERE login=?",[account.login,account.email,account.birthday,account.login]);
+    async updateAccount(account: UserDto): Promise<boolean> {
+        const [result] = await configuration.poolAccounts.query<ResultSetHeader>("UPDATE accounts SET login=?,email=?,birthday=? WHERE login=?",[account.login,account.email,account.birthday,account.login]);
+        return Promise.resolve(result.changedRows > 0  );
     }
 
 }

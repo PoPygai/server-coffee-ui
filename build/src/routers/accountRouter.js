@@ -34,11 +34,14 @@ exports.accountRouter.delete('/account/:login', (0, express_async_handler_1.defa
 exports.accountRouter.get('/signin', (0, express_async_handler_1.default)(async (req, res) => {
     const login = req.query.login;
     const password = req.query.password;
-    //todo
     if (!login || !password) {
         res.status(400).json({ message: "Login and password required" });
         return;
     }
     const result = await controller.singIn(login, password);
     res.status(200).json(result);
+}));
+exports.accountRouter.patch('/account', (0, express_async_handler_1.default)(async (req, res) => {
+    await controller.changeRoleAccount(req.body, req.role);
+    res.status(200).json('Role Updated');
 }));

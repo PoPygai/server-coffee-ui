@@ -1,6 +1,7 @@
 import {UserDto} from "../model/UserDto";
 import {convertUserDtoToUser} from "../utils/tools";
 import {configuration} from "../config/config";
+import {Roles} from "../utils/types";
 
 
 export class accountController {
@@ -16,8 +17,10 @@ export class accountController {
     }
 
     async updateAccount(value: UserDto) {
-        await  configuration.accService.updateAccount(value);
-        return value;
+        const result = await configuration.accService.updateAccount(value);
+        if(result)
+            return value;
+        throw new Error(JSON.stringify({status:403 ,message:"No user found"}));
     }
 
     async deleteAccount(login:string) {
@@ -26,5 +29,9 @@ export class accountController {
 
     async singIn(login: string, password: string) {
         return  await configuration.accService.signIn(login, password);
+    }
+
+    async changeRoleAccount(body:{login:string, role:Roles},userRole:Roles) {
+        await configuration.accService.changeRoleAccount(body,userRole);
     }
 }

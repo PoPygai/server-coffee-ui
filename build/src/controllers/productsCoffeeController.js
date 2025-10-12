@@ -17,7 +17,7 @@ class controllerProductCoffee {
                 ...coffee
             };
         }
-        throw new Error(JSON.stringify({ status: 400, message: "Coffee not updated" }));
+        throw new Error(JSON.stringify({ status: 404, message: "Coffee not updated" }));
     }
     async quantityCoffeeByName(name) {
         return config_1.configuration.coffeeService.quantityCoffeeByName(name);

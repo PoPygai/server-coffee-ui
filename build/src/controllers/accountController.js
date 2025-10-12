@@ -22,5 +22,8 @@ class accountController {
     async singIn(login, password) {
         return await config_1.configuration.accService.signIn(login, password);
     }
+    async changeRoleAccount(body, userRole) {
+        await config_1.configuration.accService.changeRoleAccount(body, userRole);
+    }
 }
 exports.accountController = accountController;

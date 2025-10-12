@@ -1,6 +1,7 @@
 import {Router} from "express";
 import {accountController} from "../controllers/accountController";
 import asyncHandler from "express-async-handler";
+import {AuthRequest} from "../utils/types";
 
 
 export const accountRouter = Router();
@@ -39,4 +40,8 @@ accountRouter.get('/signin', asyncHandler(async (req,res)=>{
     }
     const result  = await controller.singIn(login, password);
     res.status(200).json(result);
+}))
+accountRouter.patch('/account', asyncHandler(async (req:AuthRequest,res)=>{
+    await controller.changeRoleAccount(req.body,req.role!);
+    res.status(200).json('Role Updated');
 }))

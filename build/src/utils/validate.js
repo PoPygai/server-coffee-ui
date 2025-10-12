@@ -11,7 +11,7 @@ const validateBody = (req, res, next) => {
             throw new Error(JSON.stringify({ status: 500, message: 'Validation schema not found' }));
         const { error } = schema.validate(req.body);
         if (error)
-            throw new Error(JSON.stringify({ status: 403, message: error.message }));
+            throw new Error(JSON.stringify({ status: 400, message: error.message }));
     }
     next();
 };

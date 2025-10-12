@@ -12,6 +12,7 @@ class OrderServiceImpl {
         const { orderId, nameUser, orderDate, sum_cost } = result[0];
         const [rows] = await config_1.configuration.pool.query("SELECT orderName,quantity FROM order_items WHERE orderId = ?", [id]);
         const coffeesDto = [];
+        //todo
         for (let i = 0; i < rows.length; i++) {
             const coffee = await config_1.configuration.coffeeService.getCoffeeByName(rows[i].orderName);
             const coffeeDto = (0, tools_1.convertCoffeeToCoffeeDto)(coffee);
@@ -26,20 +27,22 @@ class OrderServiceImpl {
             cost: Number(sum_cost),
         });
     }
+    // delete order
     async doneOrder(id) {
         try {
             await config_1.configuration.pool.query("DELETE FROM order_items WHERE orderId = ?", [id]);
             await config_1.configuration.pool.query("DELETE FROM orders WHERE orderId = ?", [id]);
         }
         catch (error) {
-            throw new Error(JSON.stringify({ status: 401, message: 'Invalid credentials' }));
+            throw new Error(JSON.stringify({ status: 500, message: 'Problem while deleting order' }));
         }
     }
     async addOrder(login, orders) {
         const coffeesDto = [];
         let sum = 0;
+        // get sum of cost and make array coffeesDto
+        //todo
         for (let i = 0; i < orders.length; i++) {
-            //todo
             const coffee = await config_1.configuration.coffeeService.getCoffeeByName(orders[i].name);
             const coffeeDto = (0, tools_1.convertCoffeeToCoffeeDto)(coffee);
             coffeeDto.quantity = orders[i].count;
@@ -56,11 +59,11 @@ class OrderServiceImpl {
             }
         }
         catch (e) {
-            console.log(e);
-            throw new Error(JSON.stringify({ status: 401, message: 'Invalid credentials' }));
+            await this.doneOrder(orderId);
+            throw new Error(JSON.stringify({ status: 404, message: 'Bad Order' }));
         }
+        //change quantity in coffee_products
         for (let i = 0; i < orders.length; i++) {
-            //todo
             await config_1.configuration.coffeeService.changeQuantity(orders[i].name, orders[i].count);
         }
         return Promise.resolve({
