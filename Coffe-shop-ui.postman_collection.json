@@ -1,0 +1,555 @@
+{
+	"info": {
+		"_postman_id": "c1f6df6a-5eb5-4875-b91f-1bf943d2abcb",
+		"name": "Coffe-shop-ui",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43830216",
+		"_collection_link": "https://www.postman.com/mrdava/workspace/first-api/collection/43830216-c1f6df6a-5eb5-4875-b91f-1bf943d2abcb?action=share&source=collection_link&creator=43830216"
+	},
+	"item": [
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "getOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/orders/order/a241392d-c34c-4384-ac22-c59a634b85ae",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"orders",
+								"order",
+								"a241392d-c34c-4384-ac22-c59a634b85ae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/orders/order/a241392d-c34c-4384-ac22-c59a634b85ae",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"orders",
+								"order",
+								"a241392d-c34c-4384-ac22-c59a634b85ae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"name\":\"Arabic\",\n        \"count\":2\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3033/orders/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"orders",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "coffee",
+			"item": [
+				{
+					"name": "get one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/coffee-product/Arabic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"coffee-product",
+								"Arabic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Arabic Black\",\n    \"price\":123,\n    \"quantity\":50,\n    \"status\":\"on_stock\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3033/coffee-product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"coffee-product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change value",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"ERORR\",\n    \"price\":100001000,\n    \"quantity\":\"100\",\n    \"status\":\"on_stock\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3033/coffee-product/25f0c0de-8c8e-48b6-9e9e-5b4500f7c263",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"coffee-product",
+								"25f0c0de-8c8e-48b6-9e9e-5b4500f7c263"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/coffee-product/quantity/Arabic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"coffee-product",
+								"quantity",
+								"Arabic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "qweRTY",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\n    \"id\":123\n}",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/coffee-products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"coffee-products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/coffee-product/25f0c0de-8c8e-48b6-9e9e-5b4500f7c263",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"coffee-product",
+								"25f0c0de-8c8e-48b6-9e9e-5b4500f7c263"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "acc",
+			"item": [
+				{
+					"name": "account add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\":\"SecondAdmin\",\n    \"password\":\"123456789\",\n    \"email\":\"qwer@gmail.com\",\n    \"birthday\":\"1976-10-10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3033/accounts/account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"accounts",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signIn",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "qweRTY",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{\n    \"id\":123\n}",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/accounts/signin?login=ADMIN&password=123456789",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"accounts",
+								"signin"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "ADMIN"
+								},
+								{
+									"key": "password",
+									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change account(without role and password)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\":\"User\",\n    \"password\":\"123456789\",\n    \"email\":\"qwe@gmail.com\",\n    \"birthday\":\"10/10/1976\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3033/accounts/account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"accounts",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "del acc",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3033/accounts/account/Test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"accounts",
+								"account",
+								"Test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\":\"Test\",\n    \"password\":\"123456789\",\n    \"email\":\"qwer@gmail.com\",\n    \"birthday\":\"1976-10-10\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3033/accounts/account/SecondAdmin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"accounts",
+								"account",
+								"SecondAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change role",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{vault:authorization-password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "RootAdmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\":\"SecondAdmin\",\n    \"role\":\"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3033/accounts/account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3033",
+							"path": [
+								"accounts",
+								"account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
