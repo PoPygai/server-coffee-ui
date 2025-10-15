@@ -5,7 +5,6 @@ import {UserDto} from "../model/UserDto";
 import bcrypt from "bcryptjs";
 import {Roles} from "./types";
 import jwt, { SignOptions } from 'jsonwebtoken';
-import {configuration} from "../config/config";
 
 export const convertCoffeeDtoToCoffee = (coffee:CoffeeDto):Coffee=>{
     return {
